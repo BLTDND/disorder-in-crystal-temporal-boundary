@@ -57,7 +57,7 @@ title("Disorder C temporal")
 % legend('R', 'T');
 % 绘制拟合曲线
 x_level=1:level;
-order =1;
+order =4;
 coefficients_disorder_temporal= polyfit(x_level, T, order);
 
 
@@ -68,7 +68,7 @@ hold on
 plot(xFit_level,yFit_disorder_temporal,"r-");
 xlabel("level");ylabel("T");
 legend("T","T FIT");
-
+title("Disorder C temporal");
 %% sure disorder
 V_before=0.25;
 V_after=-0.4;
@@ -111,7 +111,7 @@ title("Disorder C order")
 % legend('R', 'T');
 % 绘制拟合曲线
 x_level=1:level;
-order =1;
+order =4;
 coefficients_disorder_order= polyfit(x_level, T, order);
 
 
@@ -122,5 +122,6 @@ hold on
 plot(xFit_level,yFit_disorder_order,"r-");
 xlabel("level");ylabel("T");
 legend("T","T FIT");
+title("Disorder C order");
 % xlabel('disorder phase');ylabel('Reflactiion'),title("disorder partcial")
 toc
