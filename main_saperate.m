@@ -17,18 +17,18 @@ E_2=zeros(100,1000/2,sta_num,level);
 E_t_stor_before=zeros(2,100,1000,sta_num,level);
 %random disorder
 progressBar=waitbar(0,"disorder_all");
- for disorder_level=1:level
-     waitbar(disorder_level/level, progressBar, sprintf('进度 %d/%d', disorder_level, level));
-     disorder_C_before=1/level*disorder_level;
-     %disorder_C_after=1/level*disorder_level;
-     for count=1:sta_num
-         [t_ratio,E_t_stor0,E_omiga_2]=cal_disorder(V_before,V_after,disorder_C_before,disorder_C_after,gamma_c0,disorder_gamma);
-         Disorder_C_before(disorder_level,count)=t_ratio;
-         E_t_stor_before(:,:,:,count,disorder_level)=E_t_stor0;
-         E_2(:,:,count,disorder_level)=E_omiga_2;
-     end 
- end
- close(progressBar);
+for disorder_level=1:level
+    waitbar(disorder_level/level, progressBar, sprintf('进度 %d/%d', disorder_level, level));
+    disorder_C_before=1/level*disorder_level;
+    %disorder_C_after=1/level*disorder_level;
+    for count=1:sta_num
+        [t_ratio,E_t_stor0,E_omiga_2]=cal_disorder(V_before,V_after,disorder_C_before,disorder_C_after,gamma_c0,disorder_gamma);
+        Disorder_C_before(disorder_level,count)=t_ratio;
+        E_t_stor_before(:,:,:,count,disorder_level)=E_t_stor0;
+        E_2(:,:,count,disorder_level)=E_omiga_2;
+    end 
+end
+close(progressBar);
 save Disorder_C_before.mat
 save('E_t_stor_before.mat', 'E_t_stor_before', '-v7.3');
 save E_2.mat
@@ -47,7 +47,7 @@ figure(1)
 % legend('R', 'T');
 % 绘制拟合曲线
 x_level=1:level;
-order =1;
+order =4;
 coefficients_disorder_before = polyfit(x_level, T, order);
 
 
@@ -57,6 +57,7 @@ plot(x,T,"r*");
 hold on 
 plot(xFit_level,yFit_disorder_order_before,"r-");
 xlabel("level");ylabel("T");
+title("Disorder C before")
 legend("T","T FIT");
 
 
@@ -87,9 +88,10 @@ progressbar=waitbar(0,"disorder order");
          E_2_(:,:,count,disorder_level)=E_omiga_2;
      end 
  end
- close(progressbar);
+close(progressbar);
 save Disorder_C_after.mat
 save('E_t_stor_after.mat', 'E_t_stor_after', '-v7.3');
+% writematrix(E_t_stor_after,'E_t_stor_after.csv');
 save E_2_.mat
 load Disorder_C_after.mat
 x=reshape(1:level,[level,1]);
@@ -107,7 +109,7 @@ title("Disorder C after")
 % legend('R', 'T');
 % 绘制拟合曲线
 x_level=1:level;
-order =1;
+order =4;
 coefficients_disorder_after= polyfit(x_level, T, order);
 
 
@@ -118,4 +120,5 @@ hold on
 plot(xFit_level,yFit_disorder_after,"r-");
 xlabel("level");ylabel("T");
 legend("T","T FIT");
+title("Dicsorder C after");
 toc
